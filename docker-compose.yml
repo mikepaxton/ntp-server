@@ -1,0 +1,19 @@
+services:
+  ntp:
+    build: .
+    container_name: ntp-server
+    restart: always
+    ports:
+      - "123:123/udp"
+    volumes:
+      - ntp_data:/var/lib/chrony
+      - /etc/localtime:/etc/localtime:ro
+      - /etc/timezone:/etc/timezone:ro
+    cap_add:
+      - SYS_TIME
+    environment:
+      - NTP_SERVERS=pool.ntp.org
+      - TZ=America/Los_Angeles
+
+volumes:
+  ntp_data:
