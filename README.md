@@ -24,61 +24,8 @@ git clone https://github.com/mikepaxton/ntp-server.git
 cd ntp-server
 ```
 
-### Step 2: Create the Required Files
-Ensure the following files are in the repository directory:
 
-```sh
-FROM debian:latest
-
-# Install necessary packages
-RUN apt-get update && \
-    apt-get install -y chrony && \
-    rm -rf /var/lib/apt/lists/*
-
-# Copy the chrony configuration file
-COPY chrony.conf /etc/chrony/chrony.conf
-
-# Command to run the chrony daemon
-CMD ["chronyd", "-d", "-f", "/etc/chrony/chrony.conf"]
-```
-
-chrony.conf
-
-```sh
-server pool.ntp.org iburst
-
-driftfile /var/lib/chrony/chrony.drift
-makestep 1.0 3
-rtcsync
-
-logdir /var/log/chrony
-
-```
-docker-compose.yml
-
-```yaml
-services:
-  ntp:
-    build: .
-    container_name: ntp-server
-    restart: always
-    ports:
-      - "123:123/udp"
-    volumes:
-      - ntp_data:/var/lib/chrony
-      - /etc/localtime:/etc/localtime:ro
-      - /etc/timezone:/etc/timezone:ro
-    cap_add:
-      - SYS_TIME
-    environment:
-      - NTP_SERVERS=pool.ntp.org
-      - TZ=Etc/UTC
-
-volumes:
-  ntp_data:
-
-```
-### Step 3: Build and Run the NTP Server
+### Step 2: Build and Run the NTP Server
 Navigate to the directory containing the files and run the following commands to build the Docker image and start the NTP server:
 
 ```sh
@@ -86,7 +33,7 @@ docker-compose up -d --build
 
 ```
 
-### Step 4: Verify the NTP Server
+### Step 3: Verify the NTP Server
 To check if the NTP server is running correctly, you can inspect the logs:
 
 ```sh
