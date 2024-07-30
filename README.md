@@ -2,6 +2,9 @@
 
 This repository contains the configuration files needed to set up a Network Time Protocol (NTP) server using Docker and Docker Compose on a Raspberry Pi. The NTP server is based on `chrony` and uses the `debian:latest` Docker image for a lightweight solution.
 
+## Currently using NTP-Server
+- Joplin-Server
+
 ## Prerequisites
 
 - Docker installed on your Raspberry Pi
